@@ -15,4 +15,9 @@ $SPARK_HOME/jars
          </dependency>
          
 3. error
- kubernetes에서 local mongodb connection error          
+ kubernetes에서 local mongodb connection error
+ --> success
+ 
+     private static String   MONGODB_INPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05?authSource=admin";
+     private static String   MONGODB_OUTPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05?authSource=admin";
+          
