@@ -34,8 +34,8 @@ public class SparkKickoff {
 
     private static String streamDurationTime="10";
 
-    private static String metadatabrokerlist="localhost:9092";
-//    private static String metadatabrokerlist="my-releas-kafka-headless.default.svc.cluster.local:9092";
+//    private static String metadatabrokerlist="localhost:9092";
+    private static String metadatabrokerlist="my-kafka.default.svc.cluster.local:9092";
 
     private static String topicsAll="topic";
     //	@Autowired
@@ -142,20 +142,20 @@ public class SparkKickoff {
             System.out.println( "rdd.count:" + rdd.count() );
         });
 
-//        stream.foreachRDD( x -> {
-//            x.collect().forEach( (xx)-> { System.out.println("Kafka Received Data:" + xx.value());  });
-//
-//            x.collect().forEach( (xx)-> {
-//                System.out.println("Kafka Received Data:" + xx.value());
-//                List<KafkaData> data = Arrays.asList(new KafkaData(null, xx.value()));
-//                Dataset<Row> dataFrame = sparkSession.createDataFrame(data, KafkaData.class);
-//                dataFrame.createOrReplaceTempView("my_kafka");
-//                Dataset<Row> sqlDS=sparkSession.sql("select * from my_kafka");
-//                sqlDS.printSchema();
-//                sqlDS.show();
-//            });
-//
-//        });
+        stream.foreachRDD( x -> {
+            x.collect().forEach( (xx)-> { System.out.println("Kafka Received Data:" + xx.value());  });
+
+            x.collect().forEach( (xx)-> {
+                System.out.println("Kafka Received Data:" + xx.value());
+                List<KafkaData> data = Arrays.asList(new KafkaData(null, xx.value()));
+                Dataset<Row> dataFrame = sparkSession.createDataFrame(data, KafkaData.class);
+                dataFrame.createOrReplaceTempView("my_kafka");
+                Dataset<Row> sqlDS=sparkSession.sql("select * from my_kafka");
+                sqlDS.printSchema();
+                sqlDS.show();
+            });
+
+        });
 
 
         //-----------------------------------------------------------------------------------------------------------------------------
@@ -235,50 +235,50 @@ public class SparkKickoff {
         //-----------------------------------------------------------------------------------------------------------------------------
         // Hadoop 저장
         //-----------------------------------------------------------------------------------------------------------------------------
-        boolean HADOOP_RUN_FLAG = false;
-        if (HADOOP_RUN_FLAG) {
-            stream.foreachRDD(x -> {
-                if (x.count() > 0) {
-                    x.collect().forEach((xx) -> {
-//                    System.out.println("Kafka Received Data:" + xx.value());
-                    });
-
-                    List<KafkaData> data = new ArrayList<>();
-                    x.collect().forEach(record -> {
-                                data.add(new KafkaData(null, record.value()));
-                            }
-                    );
-
-                    Dataset<Row> dataFrame = sparkSession.createDataFrame(data, KafkaData.class);
-                    dataFrame.createOrReplaceTempView("my_kafka2");
-                    Dataset<Row> sqlDS = sparkSession.sql("select * from my_kafka2");
-                    sqlDS.printSchema();
-                    sqlDS.show();
-
-
-                    dataFrame.write().mode(SaveMode.Append).parquet(path + "my_kafka2.parquet");
-
-                    try {
-                        System.out.println("================================================================");
-                        System.out.println("HDFS Connecting");
-                        System.out.println("================================================================");
-
-
-                        //--------------------------------------
-                        //--------------------------------------
-                        // TODO: 20. 7. 24. 파일논리명을 DB에  업무 Key와 연관지어 저장한다.
-                        dataFrame.write().mode(SaveMode.Append).parquet("hdfs://hadoop-local:9000/user/hdoop/schedule/t1");
-                        System.out.println("HDFS Save success!!!!");
-
-
-                    } catch (Exception ex) {
-                        System.out.println("HDFS failed " + ex.getMessage());
-                        ex.printStackTrace();
-                    }
-
-                }
-            });
-        }
+//        boolean HADOOP_RUN_FLAG = false;
+//        if (HADOOP_RUN_FLAG) {
+//            stream.foreachRDD(x -> {
+//                if (x.count() > 0) {
+//                    x.collect().forEach((xx) -> {
+////                    System.out.println("Kafka Received Data:" + xx.value());
+//                    });
+//
+//                    List<KafkaData> data = new ArrayList<>();
+//                    x.collect().forEach(record -> {
+//                                data.add(new KafkaData(null, record.value()));
+//                            }
+//                    );
+//
+//                    Dataset<Row> dataFrame = sparkSession.createDataFrame(data, KafkaData.class);
+//                    dataFrame.createOrReplaceTempView("my_kafka2");
+//                    Dataset<Row> sqlDS = sparkSession.sql("select * from my_kafka2");
+//                    sqlDS.printSchema();
+//                    sqlDS.show();
+//
+//
+//                    dataFrame.write().mode(SaveMode.Append).parquet(path + "my_kafka2.parquet");
+//
+//                    try {
+//                        System.out.println("================================================================");
+//                        System.out.println("HDFS Connecting");
+//                        System.out.println("================================================================");
+//
+//
+//                        //--------------------------------------
+//                        //--------------------------------------
+//                        // TODO: 20. 7. 24. 파일논리명을 DB에  업무 Key와 연관지어 저장한다.
+//                        dataFrame.write().mode(SaveMode.Append).parquet("hdfs://hadoop-local:9000/user/hdoop/schedule/t1");
+//                        System.out.println("HDFS Save success!!!!");
+//
+//
+//                    } catch (Exception ex) {
+//                        System.out.println("HDFS failed " + ex.getMessage());
+//                        ex.printStackTrace();
+//                    }
+//
+//                }
+//            });
+//        }
 
 
 
