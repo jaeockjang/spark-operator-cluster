@@ -13,3 +13,6 @@ $SPARK_HOME/jars
              <artifactId>mongo-java-driver</artifactId>
              <version>3.12.6</version>
          </dependency>
+         
+3. error
+ kubernetes에서 local mongodb connection error          
