@@ -58,8 +58,18 @@ public class SparkKickoff {
 //    private static String   MONGODB_INPUT_URI="mongodb://my-release-mongodb.default.svc.cluster.local/test.test05";
 //    private static String   MONGODB_OUTPUT_URI="mongodb://my-release-mongodb.default.svc.cluster.local/test.test05";
 
-    private static String   MONGODB_INPUT_URI="mongodb://mongodb-local/test.test05";
-    private static String   MONGODB_OUTPUT_URI="mongodb://mongodb-local/test.test05";
+//    private static String   MONGODB_INPUT_URI="mongodb://mongodb-local/test.test05";
+//    private static String   MONGODB_OUTPUT_URI="mongodb://mongodb-local/test.test05";
+    private static String   MONGODB_AUTH_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017";
+
+//    private static String   MONGODB_AUTH_URI="mongodb://root:l5bRtkeK2n@my-release-mongo-mongodb.default.svc.cluster.local:27017/?authSource=admin&readPreference=primary&ssl=false";
+
+    private static String   MONGODB_INPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05?authSource=admin";
+    private static String   MONGODB_OUTPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05?authSource=admin";
+
+//    private static String   MONGODB_INPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05";
+//    private static String   MONGODB_OUTPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05";
+
 
     public static SparkConf sparkConf() {
         SparkConf conf = new SparkConf()
@@ -69,6 +79,7 @@ public class SparkKickoff {
                 .set("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector_2.12:3.0.0")
                 .registerKryoClasses(new Class<?>[] { ConsumerRecord.class})
 
+//                .set("spark.mongodb.auth.uri", MONGODB_AUTH_URI)
                 .set("spark.mongodb.input.uri", MONGODB_INPUT_URI)
                 .set("spark.mongodb.output.uri", MONGODB_OUTPUT_URI)
 
@@ -167,6 +178,7 @@ public class SparkKickoff {
 
         // Create a custom WriteConfig
         Map<String, String> writeOverrides = new HashMap<String, String>();
+        writeOverrides.put("database", "test");
         writeOverrides.put("collection", "test05");
         writeOverrides.put("writeConcern.w", "majority");
         WriteConfig writeConfig = WriteConfig.create(jsctx).withOptions(writeOverrides);
