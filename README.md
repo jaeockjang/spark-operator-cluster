@@ -38,4 +38,14 @@ kafka-clients-2.5.0.jar
 https://phoenixnap.com/kb/install-hadoop-ubuntu
 
 -- hadoop docker
-https://hub.docker.com/r/bde2020/hadoop-datanode           
+https://hub.docker.com/r/bde2020/hadoop-datanode    
+
+5. 관련..
+microk8s
+kafka(kube)
+spark operator(kube)
+monogodb(kube)
+hadoop(docker-compose)
+sample service(kube)
+
+       
