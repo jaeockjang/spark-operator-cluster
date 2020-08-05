@@ -5,6 +5,18 @@ $SPARK_HOME/jars
  1. copy 
  cp /home/jojang/dev/workspace/spark/study50-01-with-mongo-01-cluster/target/study50-1.0-SNAPSHOT-jar-with-dependencies.jar .
  cp mongo-spark-connector_2.12-3.0.0.jar
+
+##필수설치
+your need add this jars in the $SPARK_HOME/JARS
+
+commons-pool2-2.8.0.jar
+kafka-clients-2.5.0.jar
+spark-sql-kafka-0-10_2.12-3.0.0-preview2.jar
+spark-token-provider-kafka-0-10_2.12-3.0.0-preview2.jar
+
+####반드시 넣어야 함... 
+spark-token-provider-kafka-0-10_2.12-3.0.0-preview2.jar
+kafka-clients-2.5.0.jar
  
  2. pom.xml에 추가
  
@@ -20,4 +32,5 @@ $SPARK_HOME/jars
  
      private static String   MONGODB_INPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05?authSource=admin";
      private static String   MONGODB_OUTPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05?authSource=admin";
-          
+
+           
