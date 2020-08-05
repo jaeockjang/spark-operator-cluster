@@ -33,4 +33,9 @@ kafka-clients-2.5.0.jar
      private static String   MONGODB_INPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05?authSource=admin";
      private static String   MONGODB_OUTPUT_URI="mongodb://root:S2acqhUKNB@my-release-mongo-mongodb.default.svc.cluster.local:27017/test.test05?authSource=admin";
 
-           
+4. 참고 싸이트
+-- hadoop 설치
+https://phoenixnap.com/kb/install-hadoop-ubuntu
+
+-- hadoop docker
+https://hub.docker.com/r/bde2020/hadoop-datanode           
